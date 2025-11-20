@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { getDatabaseConfig } from './config/database.config';
 import { AdminModule } from './modules/admin/admin.module';
 import { PostsModule } from './modules/posts/posts.module';
+import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PostsModule } from './modules/posts/posts.module';
       inject: [ConfigService],
       global: true, // Make JWT module available globally
     }),
+    CloudinaryModule, // Cloudinary service (global module)
     AdminModule,
     PostsModule,
   ],
