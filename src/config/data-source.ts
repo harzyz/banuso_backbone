@@ -5,9 +5,12 @@ import { DataSource } from 'typeorm';
 // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 require('dotenv').config();
 
+const rawUrl = process.env.DATABASE_MIGRATION_URL ?? '';
+const cleanUrl = rawUrl.replace(/[?&]sslmode=[^&]*/g, '');
+
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  url: process.env.DATABASE_MIGRATION_URL, // Direct connection
+  url: cleanUrl,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/../migrations/*{.ts,.js}'],
   ssl: { rejectUnauthorized: false },

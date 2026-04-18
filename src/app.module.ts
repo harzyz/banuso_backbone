@@ -12,7 +12,12 @@ import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot(getDatabaseConfig()),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) =>
+        getDatabaseConfig(configService),
+      inject: [ConfigService],
+    }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService): JwtModuleOptions => {
